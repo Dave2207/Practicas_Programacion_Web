@@ -45,4 +45,46 @@ public class Tienda {
     public void setListaProductos(ArrayList<Producto> listaProductos) {
         this.listaProductos = listaProductos;
     }
+
+    //Metodos de registro en listas
+    public void agregarUsuario(Usuario usr){
+        listaUsuarios.add(usr);
+    }
+    public void eliminarUsuario(Usuario usr){
+        listaUsuarios.remove(usr);
+    }
+    public void agregarProducto(Producto prod){
+        listaProductos.add(prod);
+    }
+    public void eliminarProducto(Producto prod){
+        listaProductos.remove(prod);
+    }
+    public void registrarVenta(ventasProductos venta){
+        listaVentas.add(venta);
+    }
+
+    public Usuario autenticarUsuario(String nombre, String pass){
+        Usuario usuario = null;
+        boolean found = false;
+        int i = 0;
+        while(!found && i<listaUsuarios.size()){
+            if(listaUsuarios.get(i).getNombre().equals(nombre) && listaUsuarios.get(i).getPassword().equals(pass)){
+                usuario = listaUsuarios.get(i);
+                found = true;
+            }
+        }
+        return usuario;
+    }
+
+    public void actualizarProducto(int id, String nombre, double precio){
+        boolean found = false;
+        int i = 0;
+        while(!found && i<listaProductos.size()){
+            if(listaProductos.get(i).getId() == id){
+                listaProductos.get(i).setNombre(nombre);
+                listaProductos.get(i).setPrecio(precio);
+                found = true;
+            }
+        }
+    }
 }
