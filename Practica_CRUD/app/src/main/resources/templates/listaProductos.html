@@ -19,6 +19,7 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#">Carrito</a>
+                  <a class="nav-item"><span class="badge badge-danger navbar-badge" th:text="${size}"> 3</span></a>
                 </li>
               </ul>
         </header>
@@ -38,6 +39,12 @@
                 <tr th:each="producto : ${listado}">
                     <td th:text="${producto.nombre}"></td>
                     <td th:text="${producto.precio}"></td>
+                    <td>
+                      <input type="number" min=1 value=1 id="cantidad" name="cantidad">
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-success">Agregar</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
