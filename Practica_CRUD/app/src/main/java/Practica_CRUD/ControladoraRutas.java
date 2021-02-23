@@ -1,4 +1,5 @@
 package Practica_CRUD;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,17 +21,13 @@ public class ControladoraRutas {
         Tienda.getInstance().agregarProducto(n3);
     }
 
-    public void aplicarRutas(){
+    public void aplicarRutas() {
         app.routes(() -> {
-            path("/", () -> {
-
-                get("/", ctx -> {
-                    List<Producto> listaProductos = Tienda.getInstance().getListaProductos();
-                    Map<String, Object> modelo = new HashMap<>();
-                    modelo.put("listado", Tienda.getInstance().getListaProductos());
-                    ctx.render("/resources/templates/listaProductos.html", modelo);
-                });
-
+            get("/", ctx -> {
+                List<Producto> listaProductos = Tienda.getInstance().getListaProductos();
+                Map<String, Object> modelo = new HashMap<>();
+                modelo.put("listado", listaProductos);
+                ctx.render("/resources/templates/listaProductos.html", modelo);
             });
         });
     }
