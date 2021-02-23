@@ -49,15 +49,15 @@ public class ControladoraRutas {
                 ctx.render("/templates/listaProductos.html", modelo);
             });
 
-            before("/admin", ctx -> {
+            before("/confirmarLog", ctx -> {
                 String usuario = ctx.formParam("Username");
                 String pass = ctx.formParam("Password");
-                if (tienda.autenticarUsuario(usuario, pass) == false) {
+                if (tienda.autenticarUsuario(usuario, pass) == null) {
                     ctx.redirect("/login.html");
                 }
             });
 
-            app.post("/admin", ctx -> {
+            app.post("/confirmarLog", ctx -> {
                 String usuario = ctx.formParam("Username");
                 String pass = ctx.formParam("Password");
                 String id = ctx.req.getSession().getId();
@@ -86,11 +86,11 @@ public class ControladoraRutas {
                 if(ctx.sessionAttribute("user").equals("admin")){
                     List<Producto> lista = tienda.getListaProductos();
                     Map<String, Object> modelo = new HashMap<>();
-                    modelo.put("lista", lista);
+                    modelo.put("listado", lista);
                     modelo.put("size", ((carroCompra) ctx.sessionAttribute("carrito")).getListaProductos().size());
-                    ctx.render("/administrarProductos.html", modelo);
+                    ctx.render("/administrarProducto.html", modelo);
                 } else {
-                    ctx.redirect("/error.html"); //archivo por agregar
+                    ctx.redirect("/error.html");
                 }
             });
 

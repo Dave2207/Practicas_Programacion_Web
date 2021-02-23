@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sign up!</title>
+    <title>Registro de usuario</title>
     <!-- bootstrap css -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
@@ -20,7 +20,7 @@
             <h1>Nuevo usuario</h1>
         </div>
 
-        <form action="/crearUsuario" method="post">
+        <form action="/registrarUsuario" method="post">
 
             <div class="form-group">
                 <input type="text" class="form-control" name="Name" placeholder="Name" required="required">
@@ -32,7 +32,8 @@
                 <input type="password" class="form-control" name="Password" placeholder="Password" required="required">
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+                <button type="submit" class="btn btn-primary btn-block">Registrar</button><br>
+                <p class="text-center"><a href="/productos">Cancelar</a></p>
             </div>
     </div>
 

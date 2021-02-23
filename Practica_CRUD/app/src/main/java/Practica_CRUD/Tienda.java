@@ -63,16 +63,18 @@ public class Tienda {
         listaVentas.add(venta);
     }
 
-    public boolean autenticarUsuario(String nombre, String pass){
+    public Usuario autenticarUsuario(String nombre, String pass){
+        Usuario aux = null;
         boolean found = false;
         int i = 0;
         while(!found && i<listaUsuarios.size()){
             if(listaUsuarios.get(i).getNombre().equals(nombre) && listaUsuarios.get(i).getPassword().equals(pass)){
+                aux = listaUsuarios.get(i);
                 found = true;
             }
             i++;
         }
-        return found;
+        return aux;
     }
 
     public void actualizarProducto(int id, String nombre, double precio){
