@@ -2,10 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Administrar productos</title>
+    <title>Ventas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 </head>
-
+<body>
 <header>
     <ul class="nav justify-content-end">
         <li class="nav-item">
@@ -19,45 +19,39 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/carrito">Carrito (<span th:text="${size}"></span>)</a>
-          <!-- <a class="nav-item"><span class="badge badge-danger navbar-badge" th:text="${size}">0</span></a> -->
         </li>
       </ul>
 </header>
-<body>
 <br>
-
-<div class="text-center">
-    <h1 class="text-center">Listado de productos</h1>
-    <br>
-    <a class="btn btn-primary" href="/nuevoProducto.html">Nuevo producto</a>
-</div>
-
+<h1 class="text-center">Ventas Realizadas</h1>
 <br>
+<!-- TODO DOUBLE FOREACH -->
+<div th:each="venta : ${lista}">
+    <div class="col-6 justify-content-center offset-3">
 
-<div class="col-6 justify-content-center offset-3">
-    <table class="table">
-        <thead class="table-primary">
+        <h2 class="text-center" th:text="${venta.nombreCliente}+' - '+${venta.fechaCompra}">Cliente - Fecha</h2>
+        <table class="table">
+            <thead class="table-primary">
             <tr>
                 <th>Id</th>
                 <th>Producto</th>
-                <th>Precio (RD$)</th>
-                <th>Acción</th>
+                <th>Precio ($RD)</th>
             </tr>
-        </thead>
-        <tbody>
-            <tr th:each="producto : ${listado}">
-                <td th:text="${producto.id}"></td>
-                <td th:text="${producto.nombre}"></td>
-                <td th:text="${producto.precio}"></td>
-                <td>
-                    <a th:text="Editar" th:href="'editarProd/'+${producto.id}" th class="btn btn-secondary btn-sm"/> |
-                    <a th:text="Eliminar" th:href="'eliminarProd/'+${producto.id}" th class="btn btn-danger btn-sm"/>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-  </div>
+            </thead>
+            <tbody>
+            <tr th:each="producto : ${venta.listaProductos}">
+                <td th:text="${producto.id}">Nombre</td>
+                <td th:text="${producto.nombre}">Nombre</td>
+                <td th:text="${producto.precio}">Precio</td>
 
+            </tr>
+            </tbody>
+        </table>
+        <h3 class="text-center" th:text="'Total Compra: '+${venta.total}">Precio Total</h3>
+        <br />
+
+    </div>
+</div>
 <div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

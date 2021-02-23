@@ -18,7 +18,7 @@
           <a class="nav-link" href="/administrarProductos">Administrar Productos</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/carrito" th:text="Carrito (${size})">Carrito (0)</a>
+          <a class="nav-link" href="/carrito">Carrito (<span th:text="${size}"></span>)</a>
           <!-- <a class="nav-item"><span class="badge badge-danger navbar-badge" th:text="${size}">0</span></a> -->
         </li>
       </ul>
