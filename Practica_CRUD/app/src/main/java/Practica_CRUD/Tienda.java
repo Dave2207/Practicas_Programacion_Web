@@ -70,6 +70,7 @@ public class Tienda {
             if(listaUsuarios.get(i).getNombre().equals(nombre) && listaUsuarios.get(i).getPassword().equals(pass)){
                 found = true;
             }
+            i++;
         }
         return found;
     }
@@ -83,6 +84,21 @@ public class Tienda {
                 listaProductos.get(i).setPrecio(precio);
                 found = true;
             }
+            i++;
         }
+    }
+
+    public Producto findProductoById(int id){
+        boolean found = false;
+        int i = 0;
+        Producto aux = null;
+        while(!found && i<listaProductos.size()){
+            if(listaProductos.get(i).getId() == id){
+                aux = listaProductos.get(i);
+                found = true;
+            }
+            i++;
+        }
+        return aux;
     }
 }
