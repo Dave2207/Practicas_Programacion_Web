@@ -1,11 +1,13 @@
 package Practica_CRUD;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import io.javalin.Javalin;
 import static io.javalin.apibuilder.ApiBuilder.*;
-
 
 public class ControladoraRutas {
     Javalin app;
@@ -14,6 +16,7 @@ public class ControladoraRutas {
     public ControladoraRutas(Javalin app) {
         this.app = app;
         Usuario yo = new Usuario("David Vasquez", "admin", "admin");
+        tienda.agregarUsuario(yo);
         Producto n1 = new Producto(1, "Disco duro", 500.0);
         Producto n2 = new Producto(2, "RPi 4", 2000.0);
         Producto n3 = new Producto(3, "RAM", 4000.0);
@@ -49,41 +52,37 @@ public class ControladoraRutas {
                 ctx.render("/templates/listaProductos.html", modelo);
             });
 
-            before("/confirmarLog", ctx -> {
-                String usuario = ctx.formParam("Username");
-                String pass = ctx.formParam("Password");
-                if (tienda.autenticarUsuario(usuario, pass) == null) {
-                    ctx.redirect("/login.html");
-                }
-            });
-
             app.post("/confirmarLog", ctx -> {
                 String usuario = ctx.formParam("Username");
                 String pass = ctx.formParam("Password");
                 String id = ctx.req.getSession().getId();
                 ctx.req.getSession().invalidate();
                 ctx.sessionAttribute("user", usuario);
-                ctx.redirect("/");
+                if (tienda.autenticarUsuario(usuario, pass) == null) {
+                    ctx.redirect("/login.html");
+                } else {
+                    ctx.redirect("/");
+                }
             });
 
             app.post("/registrarUsuario", ctx -> {
-                String usuario = ctx.formParam("Username");
+                String nombre = ctx.formParam("Username");
                 String pass = ctx.formParam("Password");
-                String nombre = ctx.formParam("Name");
-                System.out.println(usuario+" "+pass+" "+nombre);
-                Usuario tmp = new Usuario(usuario,nombre,pass);
+                String usuario = ctx.formParam("Name");
+                System.out.println(usuario + " " + pass + " " + nombre);
+                Usuario tmp = new Usuario(usuario, nombre, pass);
                 tienda.agregarUsuario(tmp);
                 ctx.redirect("/login.html");
             });
 
             app.before("/administrarProductos", ctx -> {
-                if(ctx.sessionAttribute("user") == null){
+                if (ctx.sessionAttribute("user") == null) {
                     ctx.redirect("/login.html");
                 }
             });
 
             app.get("/administrarProductos", ctx -> {
-                if(ctx.sessionAttribute("user").equals("admin")){
+                if (ctx.sessionAttribute("user").equals("admin")) {
                     List<Producto> lista = tienda.getListaProductos();
                     Map<String, Object> modelo = new HashMap<>();
                     modelo.put("listado", lista);
@@ -103,40 +102,104 @@ public class ControladoraRutas {
                 ctx.redirect("/administrarProductos");
             });
 
-            app.get("/eliminarProd/:id", ctx ->{
-                int id = ctx.pathParam("id",Integer.class).get();
+            app.get("/eliminarProd/:id", ctx -> {
+                int id = ctx.pathParam("id", Integer.class).get();
                 Producto p = tienda.findProductoById(id);
                 tienda.eliminarProducto(p);
                 ctx.redirect("/administrarProductos");
             });
 
-            app.get("/editarProd/:id", ctx ->{
-                int id = ctx.pathParam("id",Integer.class).get();
+            app.get("/editarProd/:id", ctx -> {
+                int id = ctx.pathParam("id", Integer.class).get();
                 Map<String, Object> modelo = new HashMap<>();
-    
+
                 Producto p = tienda.findProductoById(id);
-    
-                modelo.put("id",id);
-                modelo.put("nombre",p.getNombre());
-                modelo.put("precio",p.getPrecio());
-    
-                ctx.render("/templates/editarProducto.html",modelo); //archivo a crear
+
+                modelo.put("id", id);
+                modelo.put("nombre", p.getNombre());
+                modelo.put("precio", p.getPrecio());
+
+                ctx.render("/templates/editarProducto.html", modelo); // archivo a crear
             });
 
             app.post("/editarProd/:id", ctx -> {
-                int id = ctx.pathParam("id",Integer.class).get();
+                int id = ctx.pathParam("id", Integer.class).get();
                 String nombre = ctx.formParam("nombre", String.class).get();
                 double precio = ctx.formParam("precio", Double.class).get();
-                tienda.actualizarProducto(id,nombre,precio);
+                tienda.actualizarProducto(id, nombre, precio);
                 ctx.redirect("/administrarProductos");
             });
 
-            app.before("/anadirAlCarrito", ctx -> {
-                if(ctx.sessionAttribute("carrito") == null){
-                    ctx.redirect("login.html");
+            app.post("anadirAlCarrito", ctx -> {
+                int id = ctx.formParam("id", Integer.class).get();
+                int cant = ctx.formParam("cantidad", Integer.class).get();
+                Producto p = tienda.findProductoById(id);
+                carroCompra carrito = ctx.sessionAttribute("carrito");
+                for (int i = 0; i < cant; i++) {
+                    carrito.agregarProducto(p);                    
+                }
+                if(cant > 1){
+                    System.out.println("Se agregaron " + cant + "productos al carrito.");
+                } else {
+                    System.out.println("Se agregó 1 producto al carrito");
+                }
+                ctx.redirect("/");
+            });
+
+            app.get("/carrito", ctx -> {
+                carroCompra carrito = ctx.sessionAttribute("carrito");
+                Map<String, Object> modelo = new HashMap<>();
+                modelo.put("lista", carrito.getListaProductos());
+                modelo.put("size", ((carroCompra)ctx.sessionAttribute("carrito")).getListaProductos().size());
+                ctx.render("/templates/miCarrito.html", modelo);
+            });
+
+            app.get("eliminarDelCarrito/:id", ctx -> {
+                int id = ctx.pathParam("id", Integer.class).get();
+                carroCompra carrito = ctx.sessionAttribute("carrito");
+                carrito.eliminarProducto(tienda.findProductoById(id));
+
+                ctx.redirect("/carrito");
+            });
+
+            app.before("/procesar", ctx ->{
+                carroCompra carrito = ctx.sessionAttribute("carrito");
+                if(carrito.getListaProductos().size() == 0){
+                    ctx.redirect("/carrito");
                 }
             });
 
+            app.get("/procesar", ctx -> {
+                carroCompra carrito = ctx.sessionAttribute("carrito");
+                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                Date fecha = new Date();
+
+                ArrayList<Producto> productos = new ArrayList<>();
+                for (Producto p : carrito.getListaProductos()) {
+                    productos.add(p);
+                }
+
+                ventasProductos venta = new ventasProductos(carrito.getId(), formato.format(fecha), ctx.sessionAttribute("user"), productos);
+                tienda.agregarVenta(venta);
+                carrito.getListaProductos().clear();
+                ctx.redirect("/templates/compraRealizada.html");
+            });
+
+            app.before("/ventasRealizadas", ctx -> {
+                if(ctx.sessionAttribute("user") == null){
+                    ctx.redirect("/login.html");
+                }
+            });
+
+            app.get("/ventasRealizadas", ctx -> {
+                ArrayList<ventasProductos> lista = tienda.getListaVentas();
+                Map<String, Object> modelo = new HashMap<>();
+                
+                modelo.put("lista", lista);
+                modelo.put("size", ((carroCompra)ctx.sessionAttribute("carrito")).getListaProductos().size());
+
+                ctx.render("/templates/ventas.html", modelo);
+            });
         });
     }
 

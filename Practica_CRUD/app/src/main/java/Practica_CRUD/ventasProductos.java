@@ -4,28 +4,28 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ventasProductos {
-    private int id;
-    private Date fechaCompra;
+    private String id;
+    private String fechaCompra;
     private String nombreCliente;
     private ArrayList<Producto> listaProductos;
 
-    public ventasProductos(int id, Date fechaCompra, String nombreCliente, ArrayList<Producto> listaProductos) {
+    public ventasProductos(String id, String fechaCompra, String nombreCliente, ArrayList<Producto> listaProductos) {
         this.id = id;
         this.fechaCompra = fechaCompra;
         this.nombreCliente = nombreCliente;
         this.listaProductos = listaProductos;
     }
 
-    public int getId(){
+    public String getId(){
         return this.id;
     }
-    public void setId(int ID){
+    public void setId(String ID){
         this.id = ID;
     }
-    public Date getFechaCompra(){
+    public String getFechaCompra(){
         return this.fechaCompra;
     }
-    public void setFechaCompra(Date fecha){
+    public void setFechaCompra(String fecha){
         this.fechaCompra = fecha;
     }
 

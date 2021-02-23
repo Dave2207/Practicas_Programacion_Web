@@ -103,4 +103,8 @@ public class Tienda {
         }
         return aux;
     }
+
+	public void agregarVenta(ventasProductos venta) {
+        listaVentas.add(venta);
+	}
 }

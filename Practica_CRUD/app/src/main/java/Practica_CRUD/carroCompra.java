@@ -27,4 +27,11 @@ public class carroCompra {
         this.listaProductos = listaProductos;
     }
 
+    public void agregarProducto(Producto prod){
+        listaProductos.add(prod);
+    }
+    public void eliminarProducto(Producto prod){
+        listaProductos.remove(prod);
+    }
+
 }
