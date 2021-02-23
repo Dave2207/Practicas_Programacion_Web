@@ -3,19 +3,19 @@ package Practica_CRUD;
 import java.util.ArrayList;
 
 public class carroCompra {
-    private int id;
+    private String id;
     private ArrayList<Producto> listaProductos;
 
-    public carroCompra(int id, ArrayList<Producto> listaProductos) {
+    public carroCompra(String id) {
         this.id = id;
-        this.listaProductos = listaProductos;
+        this.listaProductos = new ArrayList<>();
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
