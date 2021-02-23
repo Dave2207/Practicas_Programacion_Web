@@ -3,11 +3,9 @@
  */
 package Practica_CRUD;
 import io.javalin.Javalin;
-import io.javalin.core.util.RouteOverviewPlugin;
-import io.javalin.plugin.openapi.OpenApiPlugin;
-import io.javalin.plugin.openapi.OpenApiOptions;
 import io.javalin.plugin.rendering.JavalinRenderer;
 import io.javalin.plugin.rendering.template.JavalinThymeleaf;
+import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class App {
     public String getGreeting() {
@@ -19,8 +17,6 @@ public class App {
 
         Javalin app = Javalin.create(config -> {
             config.addStaticFiles("/templates");
-            config.registerPlugin(new RouteOverviewPlugin("/rutas"));
-            config.enableCorsForAllOrigins();
         }).start(7000);
 
         JavalinRenderer.register(JavalinThymeleaf.INSTANCE, ".html");

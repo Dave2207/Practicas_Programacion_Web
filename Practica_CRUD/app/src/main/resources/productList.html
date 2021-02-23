@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Lista de Productos</title>
+    <div th:replace="/templates/thymeleaf/fragments.html :: imports"></div>
+    <link rel='stylesheet' href='/CSS/Estilos.css' type='text/css'>
+
+</head>
+
+<body class="p-3 mb-2 bg-dark text-white">
+    <div th:replace="/templates/thymeleaf/fragments.html :: navbar"></div>
+    <div class="container-fluid">
+        <div class="row separation-top separation-bottom">
+            <div class="col align-self-center">
+                <h2>Lista Productos</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="table table-dark">
+                <table class="separation-top">
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio (RD$)</th>
+                        <th>Cantidad</th>
+                        <th>Acción</th>
+                    </tr>
+                    <tr th:each="product : ${products}">
+                        <td th:text="${product.name}"></td>
+                        <td th:text="${product.price}"></td>
+                        <td>
+                            <form method="post" th:action="@{/tienda/productos/add/{id}(id=${product.productId})}" th:id="@{product-{id}(id=${product.productId})}">
+                                <input type="number" min=1 value=1 id=cant name=cant class="form-control">
+                            </form>
+                        </td>
+
+                        <td>
+                            <button class="btn btn-primary" type=submit th:form=@{product-{id}(id=${product.productId})}>Agregar al carrito</button>
+                        </td>
+
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+</body>
+
+</html>

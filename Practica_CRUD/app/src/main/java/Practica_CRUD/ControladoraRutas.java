@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import io.javalin.Javalin;
 import static io.javalin.apibuilder.ApiBuilder.*;
+import io.javalin.plugin.rendering.JavalinRenderer;
+import io.javalin.plugin.rendering.template.JavalinThymeleaf;
 
 public class ControladoraRutas {
     Javalin app;
@@ -22,13 +24,18 @@ public class ControladoraRutas {
     }
 
     public void aplicarRutas() {
+        //app.get("/", ctx -> ctx.result("Hola Mundo en Javalin :-D"));
+        app.get("/", ctx -> ctx.redirect("/productos"));
+
         app.routes(() -> {
-            get("/", ctx -> {
+
+            get("/productos", ctx -> {
                 List<Producto> listaProductos = Tienda.getInstance().getListaProductos();
                 Map<String, Object> modelo = new HashMap<>();
                 modelo.put("listado", listaProductos);
-                ctx.render("/resources/templates/listaProductos.html", modelo);
+                ctx.render("/templates/listaProductos.html", modelo);
             });
+            
         });
     }
 
