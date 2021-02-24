@@ -38,16 +38,19 @@ public class ControladoraRutas {
                 List<Producto> listaProductos = Tienda.getInstance().getListaProductos();
                 Map<String, Object> modelo = new HashMap<>();
                 modelo.put("listado", listaProductos);
-                if (ctx.sessionAttribute("user") == null) {
+
+                if (ctx.sessionAttribute("carrito") == null) {
+                    carroCompra carro = new carroCompra(ctx.req.getSession().getId());
+                    ctx.sessionAttribute("carrito", carro);
                     modelo.put("size", 0);
                 } else {
-                    if (ctx.sessionAttribute("carrito") == null) {
-                        carroCompra carro = new carroCompra(ctx.req.getSession().getId());
-                        ctx.sessionAttribute("carrito", carro);
-                        modelo.put("size", 0);
-                    } else {
-                        modelo.put("size", ((carroCompra) ctx.sessionAttribute("carrito")).getListaProductos().size());
+                    int i = 0;
+                    List<carroCompra> pl = ctx.sessionAttribute("carrito");
+                    for (carroCompra p : pl) {
+                        i += p.getListaProductos().size();
                     }
+                    modelo.put("size", i);
+                    //modelo.put("size", ((carroCompra) ctx.sessionAttribute("carrito")).getListaProductos().size());
                 }
                 ctx.render("/templates/listaProductos.html", modelo);
             });
@@ -140,10 +143,15 @@ public class ControladoraRutas {
                 Producto p = tienda.findProductoById(id);
                 carroCompra carrito = ctx.sessionAttribute("carrito");
                 for (int i = 0; i < cant; i++) {
-                    carrito.agregarProducto(p);                    
+                    carrito.agregarProducto(p);
                 }
+<<<<<<< HEAD
                 if(cant > 1){
                     System.out.println("Se agregaron " + cant + " productos al carrito.");
+=======
+                if (cant > 1) {
+                    System.out.println("Se agregaron " + cant + "productos al carrito.");
+>>>>>>> 5856ec20de1831b1c440ea8cc6e8d634fbc9fe9a
                 } else {
                     System.out.println("Se agregó 1 producto al carrito");
                 }
@@ -153,8 +161,13 @@ public class ControladoraRutas {
             app.get("/carrito", ctx -> {
                 carroCompra carro = ctx.sessionAttribute("carrito");
                 Map<String, Object> modelo = new HashMap<>();
+<<<<<<< HEAD
                 modelo.put("lista", carro.getListaProductos());
                 modelo.put("size", ((carroCompra)ctx.sessionAttribute("carrito")).getListaProductos().size());
+=======
+                modelo.put("lista", carrito.getListaProductos());
+                modelo.put("size", ((carroCompra) ctx.sessionAttribute("carrito")).getListaProductos().size());
+>>>>>>> 5856ec20de1831b1c440ea8cc6e8d634fbc9fe9a
                 ctx.render("/templates/miCarrito.html", modelo);
             });
 
@@ -166,9 +179,9 @@ public class ControladoraRutas {
                 ctx.redirect("/carrito");
             });
 
-            app.before("/procesar", ctx ->{
+            app.before("/procesar", ctx -> {
                 carroCompra carrito = ctx.sessionAttribute("carrito");
-                if(carrito.getListaProductos().size() == 0){
+                if (carrito.getListaProductos().size() == 0) {
                     ctx.redirect("/carrito");
                 }
             });
@@ -187,14 +200,15 @@ public class ControladoraRutas {
                     productos.add(p);
                 }
 
-                ventasProductos venta = new ventasProductos(carrito.getId(), formato.format(fecha), ctx.sessionAttribute("user"), productos);
+                ventasProductos venta = new ventasProductos(carrito.getId(), formato.format(fecha),
+                        ctx.sessionAttribute("user"), productos);
                 tienda.agregarVenta(venta);
                 carrito.getListaProductos().clear();
                 ctx.redirect("/compraRealizada");
             });
 
             app.before("/ventasRealizadas", ctx -> {
-                if(ctx.sessionAttribute("user") == null){
+                if (ctx.sessionAttribute("user") == null) {
                     ctx.redirect("/login.html");
                 }
             });
@@ -202,9 +216,9 @@ public class ControladoraRutas {
             app.get("/ventasRealizadas", ctx -> {
                 ArrayList<ventasProductos> lista = tienda.getListaVentas();
                 Map<String, Object> modelo = new HashMap<>();
-                
+
                 modelo.put("lista", lista);
-                modelo.put("size", ((carroCompra)ctx.sessionAttribute("carrito")).getListaProductos().size());
+                modelo.put("size", ((carroCompra) ctx.sessionAttribute("carrito")).getListaProductos().size());
 
                 ctx.render("/templates/ventas.html", modelo);
             });
