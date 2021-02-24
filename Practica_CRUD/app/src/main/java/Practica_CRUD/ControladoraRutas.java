@@ -93,6 +93,10 @@ public class ControladoraRutas {
                 }
             });
 
+            app.get("/nuevoProd", ctx -> {
+                ctx.render("/templates/nuevoProducto.html");
+            });
+
             app.post("/nuevoProd", ctx -> {
                 int id = ctx.formParam("id", Integer.class).get();
                 String nombre = ctx.formParam("nombre");
@@ -134,7 +138,6 @@ public class ControladoraRutas {
                 int id = ctx.formParam("id", Integer.class).get();
                 int cant = ctx.formParam("cantidad", Integer.class).get();
                 Producto p = tienda.findProductoById(id);
-                //Producto prueba = new Producto(4, "Tarjeta de red", 3500.0);
                 carroCompra carrito = ctx.sessionAttribute("carrito");
                 for (int i = 0; i < cant; i++) {
                     carrito.agregarProducto(p);                    
