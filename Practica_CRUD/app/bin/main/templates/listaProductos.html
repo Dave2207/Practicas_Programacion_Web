@@ -30,6 +30,7 @@
         <table class="table">
             <thead class="table-primary">
                 <tr>
+                    <th>Id</th>
                     <th>Producto</th>
                     <th>Precio (RD$)</th>
                     <th>Cantidad</th>
@@ -38,14 +39,17 @@
             </thead>
             <tbody>
                 <tr th:each="producto : ${listado}">
+                  <form method="POST" action="/anadirAlCarrito">
+                    <td><input style="width:60px" type="text" name="id" readonly th:value="''+${producto.id}"></td>
                     <td th:text="${producto.nombre}"></td>
                     <td th:text="${producto.precio}"></td>
                     <td>
                       <input type="number" min=1 value=1 id="cantidad" name="cantidad">
                     </td>
                     <td>
-                      <button type="button" class="btn btn-success">Agregar</button>
+                      <button type="submit" class="btn btn-success">Agregar</button>
                     </td>
+                  </form>
                 </tr>
             </tbody>
         </table>
