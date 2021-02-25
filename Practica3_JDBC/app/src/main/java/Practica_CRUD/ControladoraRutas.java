@@ -15,17 +15,17 @@ public class ControladoraRutas {
 
     public ControladoraRutas(Javalin app) {
         this.app = app;
-        Usuario yo = new Usuario("David Vasquez", "admin", "admin");
-        tienda.agregarUsuario(yo);
-        Producto n1 = new Producto(1, "Disco duro", 500.0);
-        Producto n2 = new Producto(2, "RPi 4", 2000.0);
-        Producto n3 = new Producto(3, "RAM", 4000.0);
-        Tienda.getInstance().agregarProducto(n1);
-        Tienda.getInstance().agregarProducto(n2);
-        Tienda.getInstance().agregarProducto(n3);
-        for (Usuario usuario : tienda.getListaUsuarios()) {
-            System.out.println("Usuario: " + usuario.getNombre());
-        }
+        // Usuario yo = new Usuario("David Vasquez", "admin", "admin");
+        // tienda.agregarUsuario(yo);
+        // Producto n1 = new Producto(1, "Disco duro", 500.0);
+        // Producto n2 = new Producto(2, "RPi 4", 2000.0);
+        // Producto n3 = new Producto(3, "RAM", 4000.0);
+        // Tienda.getInstance().agregarProducto(n1);
+        // Tienda.getInstance().agregarProducto(n2);
+        // Tienda.getInstance().agregarProducto(n3);
+        // for (Usuario usuario : tienda.getListaUsuarios()) {
+        //     System.out.println("Usuario: " + usuario.getNombre());
+        // }
     }
 
     public void aplicarRutas() {
