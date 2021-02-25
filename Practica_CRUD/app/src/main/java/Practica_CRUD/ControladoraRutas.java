@@ -30,6 +30,11 @@ public class ControladoraRutas {
 
     public void aplicarRutas() {
         // app.get("/", ctx -> ctx.result("Hola Mundo en Javalin :-D"));
+        app.before("/", ctx -> {
+            if(ctx.sessionAttribute("user") == null){
+                ctx.redirect("/login.html");
+            }
+        });
         app.get("/", ctx -> ctx.redirect("/productos"));
 
         app.routes(() -> {
@@ -83,7 +88,7 @@ public class ControladoraRutas {
             });
 
             app.get("/administrarProductos", ctx -> {
-                if (ctx.sessionAttribute("user").equals("admin")) {
+                if (ctx.sessionAttribute("user") != null) {
                     List<Producto> lista = tienda.getListaProductos();
                     Map<String, Object> modelo = new HashMap<>();
                     modelo.put("listado", lista);
