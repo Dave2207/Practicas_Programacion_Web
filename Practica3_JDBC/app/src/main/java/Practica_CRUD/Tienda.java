@@ -1,6 +1,11 @@
 package Practica_CRUD;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Tienda {
     private ArrayList<ventasProductos> listaVentas;
@@ -107,4 +112,94 @@ public class Tienda {
 	public void agregarVenta(ventasProductos venta) {
         listaVentas.add(venta);
 	}
+
+    public List<Usuario> cargarUsuariosDB(){
+        List<Usuario> lista = new ArrayList<>();
+        Connection con = null;
+        try {
+            String query = "select * from Usuarios";
+            con = BaseDatos.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(query);
+            ResultSet rs = pstmt.executeQuery();
+
+            while(rs.next()){
+                String username = rs.getString("username");
+                String nombre = rs.getString("nombre");
+                String pass = rs.getString("password");
+                Usuario usr = new Usuario(username, nombre, pass);
+                lista.add(usr);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Problemas en iniciar la conexión");
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                System.out.println("Hubo un problema al cerrar la conexión.");
+            }
+        }
+        return lista;
+    }
+
+    public List<Producto> cargarProductosDB(){
+        List<Producto> lista = new ArrayList<>();
+        Connection con = null;
+        try{
+            String query = "select * from Productos";
+            con = BaseDatos.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(query);
+            ResultSet rs = pstmt.executeQuery();
+
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String nombre = rs.getString("nombre");
+                Double precio = rs.getDouble("precio");
+                Producto p = new Producto(id, nombre, precio);
+                lista.add(p);
+            }
+
+        } catch(SQLException e){
+            e.printStackTrace();
+            System.out.println("Problemas en iniciar la conexión");
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                System.out.println("Hubo un problema al cerrar la conexión.");
+            }
+        }
+        return lista;
+    }
+
+    public List<ventasProductos> cargarVentasDB(){
+        List<ventasProductos> lista = new ArrayList<>();
+        Connection con = null;
+        try{
+            String query = "select * from Ventas";
+            con = BaseDatos.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(query);
+            ResultSet rs = pstmt.executeQuery();
+
+            while(rs.next()){
+                String id = rs.getString("id");
+                String fechaCompra = rs.getString("fechaCompra");
+                String cliente = rs.getString("nombreCliente");
+                Double total = rs.getDouble("total");
+                // ventasProductos venta = new ventasProductos(id, fechaCompra, cliente, listaProductos);
+                // lista.add(venta);
+            }
+
+        } catch(SQLException e){
+            e.printStackTrace();
+            System.out.println("Problemas en iniciar la conexión");
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                System.out.println("Hubo un problema al cerrar la conexión.");
+            }
+        }
+        return lista;
+    }
 }
