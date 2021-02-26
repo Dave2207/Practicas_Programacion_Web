@@ -163,7 +163,7 @@ public class BaseDatos {
     }
 
     //Queries de modificacion de objeto
-    public boolean editarProducto(Producto p){
+    public boolean editarProductoDB(Producto p){
         boolean ok = false;
         Connection con = null;
         try {
@@ -173,6 +173,34 @@ public class BaseDatos {
             stmt.setString(1, p.getNombre());
             stmt.setDouble(2, p.getPrecio());
             stmt.setInt(3, p.getId());
+
+            int fila = stmt.executeUpdate();
+            ok = fila > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error de conexión");
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("Error al cerrar conexión");
+            }
+        }
+        return ok;
+    }
+
+    public boolean editarUsuarioDB(Usuario usr){
+        boolean ok = false;
+        Connection con = null;
+        try {
+            String query = "update Usuarios set nombre=?, password=? where username=?";
+            con = getConnection();
+            PreparedStatement stmt = con.prepareStatement(query);
+            stmt.setString(1, usr.getUsuario());
+            stmt.setString(2, usr.getPassword());
+            stmt.setString(3, usr.getNombre());
 
             int fila = stmt.executeUpdate();
             ok = fila > 0;

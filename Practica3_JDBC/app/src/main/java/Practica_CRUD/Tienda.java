@@ -54,18 +54,23 @@ public class Tienda {
     //Metodos de registro en listas
     public void agregarUsuario(Usuario usr){
         listaUsuarios.add(usr);
+        BaseDatos.getInstance().crearUsuario(usr);
     }
     public void eliminarUsuario(Usuario usr){
         listaUsuarios.remove(usr);
+        BaseDatos.getInstance().eliminarUsuarioDB(usr.getNombre());
     }
     public void agregarProducto(Producto prod){
         listaProductos.add(prod);
+        BaseDatos.getInstance().crearProducto(prod);
     }
     public void eliminarProducto(Producto prod){
         listaProductos.remove(prod);
+        BaseDatos.getInstance().eliminarProductoDB(prod.getId());
     }
     public void registrarVenta(ventasProductos venta){
         listaVentas.add(venta);
+        BaseDatos.getInstance().crearVenta(venta);
     }
 
     public Usuario autenticarUsuario(String nombre, String pass){
@@ -83,16 +88,19 @@ public class Tienda {
     }
 
     public void actualizarProducto(int id, String nombre, double precio){
+        Producto aux = null;
         boolean found = false;
         int i = 0;
         while(!found && i<listaProductos.size()){
             if(listaProductos.get(i).getId() == id){
                 listaProductos.get(i).setNombre(nombre);
                 listaProductos.get(i).setPrecio(precio);
+                aux = listaProductos.get(i);
                 found = true;
             }
             i++;
         }
+        BaseDatos.getInstance().editarProductoDB(aux);
     }
 
     public Producto findProductoById(int id){
@@ -111,6 +119,7 @@ public class Tienda {
 
 	public void agregarVenta(ventasProductos venta) {
         listaVentas.add(venta);
+        BaseDatos.getInstance().crearVenta(venta);
 	}
 
     public List<Usuario> cargarUsuariosDB(){

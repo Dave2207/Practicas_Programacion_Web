@@ -16,6 +16,7 @@ public class App {
 
     public static void main(String[] args) throws SQLException {
         System.out.println(new App().getGreeting());
+        Tienda tienda = Tienda.getInstance();
 
         Javalin app = Javalin.create(config -> {
             config.addStaticFiles("/templates");
@@ -23,9 +24,14 @@ public class App {
         
         BaseDatos.startDB();
         BaseDatos.crearTablas();
-        
+        BaseDatos.getInstance().crearUsuario(new Usuario("David", "admin", "admin"));
+        tienda.cargarProductosDB();
+        tienda.cargarUsuariosDB();
+        tienda.cargarVentasDB();
 
         JavalinRenderer.register(JavalinThymeleaf.INSTANCE, ".html");
         new ControladoraRutas(app).aplicarRutas();
+
+        BaseDatos.stopDB();
     }
 }
