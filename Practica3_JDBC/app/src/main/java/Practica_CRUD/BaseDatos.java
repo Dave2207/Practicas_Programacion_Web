@@ -2,6 +2,8 @@ package Practica_CRUD;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -63,7 +65,7 @@ public class BaseDatos {
         +")");
         //Tabla ventas
         stmt.execute(create + "Ventas(\n"+
-        "id varchar(20) primary key, \n"+
+        "id varchar(20) primary key identity(1,1), \n"+
         "fechaCompra varchar(35), \n"+
         "nombreCliente varchar(50), \n"+
         "total decimal\n"
@@ -73,4 +75,172 @@ public class BaseDatos {
         con.close();
         
     }
+
+    //Queries de creacion de objetos
+    public boolean crearProducto(Producto p){
+        boolean ok = false;
+        Connection con = null;
+        try {
+            String query = "insert into Productos(nombre, precio) values (?,?)";
+            con = getConnection();
+            PreparedStatement stmt = con.prepareStatement(query);
+            //Setear los atributos de objeto
+            stmt.setString(1, p.getNombre());
+            stmt.setDouble(2, p.getPrecio());
+
+            int fila = stmt.executeUpdate();
+            ok = fila > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error de conexión");
+        } finally{
+            try{
+                con.close();
+            } catch (SQLException e){
+                e.printStackTrace();
+                System.out.println("Error al cerrar conexión");
+            }
+        }
+        return ok;
+    }
+
+    public boolean crearUsuario(Usuario usr){
+        boolean ok = false;
+        Connection con = null;
+
+        try {
+            String query = "insert into Usuarios(username, nombre, password) values (?,?,?)";
+            con = getConnection();
+            PreparedStatement stmt = con.prepareStatement(query);
+            //Setear parametros
+            stmt.setString(1, usr.getNombre());
+            stmt.setString(2, usr.getUsuario());
+            stmt.setString(3, usr.getPassword());
+
+            int fila = stmt.executeUpdate();
+            ok = fila > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error de conexión");
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("Error al cerrar conexión");
+            }
+        }
+        return ok;
+    }
+
+    public boolean crearVenta(ventasProductos venta){
+        boolean ok = false;
+        Connection con = null;
+
+        try {
+            String query = "insert into Ventas(fechaCompra, nombreCliente, total) values (?,?,?)";
+            con = getConnection();
+            PreparedStatement stmt = con.prepareStatement(query);
+            //Setear parametros
+            stmt.setString(1, venta.getFechaCompra());
+            stmt.setString(2, venta.getNombreCliente());
+            stmt.setDouble(3, venta.getTotal());
+
+            int fila = stmt.executeUpdate();
+            ok = fila > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error de conexión");
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("Error al cerrar conexión");
+            }
+        }
+        return ok;
+    }
+
+    //Queries de modificacion de objeto
+    public boolean editarProducto(Producto p){
+        boolean ok = false;
+        Connection con = null;
+        try {
+            String query = "update Productos set nombre=?, precio=? where id=?";
+            con = getConnection();
+            PreparedStatement stmt = con.prepareStatement(query);
+            stmt.setString(1, p.getNombre());
+            stmt.setDouble(2, p.getPrecio());
+            stmt.setInt(3, p.getId());
+
+            int fila = stmt.executeUpdate();
+            ok = fila > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error de conexión");
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("Error al cerrar conexión");
+            }
+        }
+        return ok;
+    }
+
+    //Queries de borrado
+    public boolean eliminarProductoDB(int id){
+        boolean ok = false;
+        Connection con = null;
+        try {
+            String query = "delete from Productos where id = ?";
+            con = getConnection();
+            PreparedStatement stmt = con.prepareStatement(query);
+            stmt.setInt(1, id);
+
+            int fila = stmt.executeUpdate();
+            ok = fila > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error de conexión");
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("Error al cerrar conexión");
+            }
+        }
+        return ok;
+    }
+
+    public boolean eliminarUsuarioDB(String username){
+        boolean ok = false;
+        Connection con = null;
+        try {
+            String query = "delete from Usuarios where username = ?";
+            con = getConnection();
+            PreparedStatement stmt = con.prepareStatement(query);
+            stmt.setString(1, username);
+
+            int fila = stmt.executeUpdate();
+            ok = fila > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error de conexión");
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("Error al cerrar conexión");
+            }
+        }
+        return ok;
+    }
+
+    
 }
