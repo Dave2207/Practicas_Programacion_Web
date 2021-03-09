@@ -25,7 +25,7 @@ public class App {
         }).start(7000);
         
         BaseDatos.startDB();
-        BaseDatos.getInstance().crearUsuario(new Usuario("David", "admin", "admin"));
+        //BaseDatos.getInstance().crearUsuario(new Usuario("David", "admin", "admin"));
 
         JavalinRenderer.register(JavalinThymeleaf.INSTANCE, ".html");
         new ControladoraRutas(app).aplicarRutas();
