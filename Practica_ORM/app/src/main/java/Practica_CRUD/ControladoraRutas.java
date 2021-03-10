@@ -84,6 +84,7 @@ public class ControladoraRutas {
                 query.setFirstResult((lastPageNumber-1)*pageSize);
                 query.setMaxResults(pageSize);
                 List<Producto> lista = query.getResultList();
+                //List<Producto> lista = ProductoServices.getInstace().findAll();
 
                 Map<String, Object> modelo = new HashMap<>();
                 modelo.put("pageCant", pageCant);
@@ -102,7 +103,7 @@ public class ControladoraRutas {
                     }
                 }
 
-                ctx.render("/listaProductos.html", modelo);
+                ctx.render("/templates/listaProductos.html", modelo);
             });
             //Login y usuario
             before("/confirmarLog", ctx ->{
@@ -149,9 +150,9 @@ public class ControladoraRutas {
                 }
             });
 
-            // app.get("/nuevoProd", ctx -> {
-            //     ctx.render("/templates/nuevoProducto.html");
-            // });
+            get("/nuevoProd", ctx -> {
+                ctx.render("/templates/nuevoProducto.html");
+            });
             //Rutas del CRUD de producto
             post("/nuevoProd", ctx -> {
                 String nombre = ctx.formParam("nombre");

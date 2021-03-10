@@ -40,7 +40,7 @@ public class BaseDatos {
 
     public void startDB() {
         try {
-        server = Server.createTcpServer("-tcpPort", "9090", "-tcpAllowOthers", "-tcpDaemon","-ifNotExists").start();
+        server = Server.createTcpServer("-tcpPort", "9092", "-tcpAllowOthers", "-tcpDaemon","-ifNotExists").start();
         } catch(SQLException e){
             e.getMessage();
         }

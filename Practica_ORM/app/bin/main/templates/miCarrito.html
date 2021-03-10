@@ -9,7 +9,7 @@
 <header>
     <ul class="nav justify-content-end">
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="/productos">Comprar</a>
+          <a class="nav-link" aria-current="page" href="/">Comprar</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/ventasRealizadas">Ventas realizadas</a>
@@ -18,7 +18,7 @@
           <a class="nav-link" href="/administrarProductos">Administrar Productos</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/#">Carrito (<span th:text="${size}"></span>)</a>
+            <a class="nav-link" href="/carrito">Carrito (<span th:text="${size}"></span>)</a>
           <!-- <a class="nav-item"><span class="badge badge-danger navbar-badge" th:text="${size}">0</span></a> -->
         </li>
       </ul>
@@ -28,7 +28,7 @@
 <div class="text-center">
     <h1>Mi carrito</h1>
     <br>
-    <h2 th:text="'Cliente '+${user}"></h2>
+    <h2 th:text="'Cliente: '+${user}"></h2>
 </div>
 
 <br>

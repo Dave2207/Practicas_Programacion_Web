@@ -5,12 +5,12 @@
              version="2.1">
     <persistence-unit name="DefaultPersistanceUnit" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>encapsulations.Producto</class>
-        <class>encapsulations.Usuario</class>
-        <class>encapsulations.ventasProductos</class>
-        <class>encapsulations.DetalleProducto</class>
-        <class>encapsulations.Foto</class>
-        <class>encapsulations.Comentario</class>
+        <class>Practica_CRUD.encapsulations.Producto</class>
+        <class>Practica_CRUD.encapsulations.Usuario</class>
+        <class>Practica_CRUD.encapsulations.ventasProductos</class>
+        <class>Practica_CRUD.encapsulations.DetalleProducto</class>
+        <class>Practica_CRUD.encapsulations.Foto</class>
+        <class>Practica_CRUD.encapsulations.Comentario</class>
         <properties>
             <!--<property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test" />-->
             <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/dbCRUD" />
