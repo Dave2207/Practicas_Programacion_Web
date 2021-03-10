@@ -18,7 +18,7 @@
           <a class="nav-link" href="/administrarProductos">Administrar Productos</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/carrito">Carrito (<span th:text="${size}"></span>)</a>
+            <a class="nav-link" href="/#">Carrito (<span th:text="${size}"></span>)</a>
           <!-- <a class="nav-item"><span class="badge badge-danger navbar-badge" th:text="${size}">0</span></a> -->
         </li>
       </ul>
@@ -28,10 +28,7 @@
 <div class="text-center">
     <h1>Mi carrito</h1>
     <br>
-    <h2>
-        <label for="clientName">Nombre del cliente: </label>
-        <input type="text" id="clientName" name="clientName">
-    </h2>
+    <h2 th:text="'Cliente '+${user}"></h2>
 </div>
 
 <br>
@@ -43,16 +40,21 @@
             <th>Id</th>
             <th>Producto</th>
             <th>Precio ($RD)</th>
+            <th>Cantidad</th>
             <th>Accion</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="producto : ${lista}">
-            <td th:text="${producto.id}">Producto</td>
-            <td th:text="${producto.nombre}">Producto</td>
-            <td th:text="${producto.precio}">Producto</td>
+        <tr th:each="detalle : ${lista}">
+            <td th:text="${detalle.producto.id}">ID Producto</td>
+            <td th:text="${detalle.producto.nombre}">Nombre Producto</td>
+            <td th:text="${detalle.producto.precio}">Precio Producto</td>
+            <td th:text="${detalle.producto.cantidad}">Cantidad Producto</td>
             <td>
-                <a th:text="Eliminar" th:href="'eliminarDelCarrito/'+${producto.id}" th class="btn btn-danger btn-sm"></a>
+                <form th:action="'eliminarProdCarrito/'+${detalle.producto.id}" method="POST">
+                    <input class="" type="number" value="1" id="cantidad" name="cantidad" min="1" th:max="${detalle.cantidad}" required>
+                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
             </td>
         </tr>
         </tbody>

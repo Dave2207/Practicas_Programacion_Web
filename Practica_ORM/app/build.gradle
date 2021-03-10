@@ -45,6 +45,8 @@ application {
     mainClass = 'Practica_CRUD.App'
 }
 
+mainClassName = 'App'
+
 shadowJar{
     baseName = 'app'
     classifier = ''

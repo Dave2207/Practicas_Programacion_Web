@@ -33,7 +33,7 @@ import Practica_CRUD.encapsulations.carroCompra;
 
 public class ControladoraRutas {
     Javalin app;
-    Tienda tienda = Tienda.getInstance();
+    //Tienda tienda = Tienda.getInstance();
 
     public ControladoraRutas(Javalin app) {
         this.app = app;
@@ -57,11 +57,11 @@ public class ControladoraRutas {
         //         ctx.redirect("/login.html");
         //     }
         // });
-        app.get("/", ctx -> ctx.redirect("/productos"));
+        app.get("/", ctx -> ctx.redirect("/productos/1"));
 
         app.routes(() -> {
             //Pagina principal, lista de productos
-            get("/productos:page", ctx -> {
+            get("/productos/:page", ctx -> {
                 EntityManager em = ProductoServices.getInstace().getEntityManager();
                 String page = ctx.pathParam("page", String.class).get();
                 //Tomo productos de base de datos

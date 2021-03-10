@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 import Practica_CRUD.encapsulations.Usuario;
 import Practica_CRUD.services.BaseDatos;
+import Practica_CRUD.services.UsuarioServices;
 
 public class App {
     public String getGreeting() {
@@ -18,14 +19,15 @@ public class App {
 
     public static void main(String[] args) throws SQLException {
         System.out.println(new App().getGreeting());
-        Tienda tienda = Tienda.getInstance();
+        //Tienda tienda = Tienda.getInstance();
 
         Javalin app = Javalin.create(config -> {
             config.addStaticFiles("/templates");
         }).start(7000);
         
-        BaseDatos.startDB();
-        //BaseDatos.getInstance().crearUsuario(new Usuario("David", "admin", "admin"));
+        BaseDatos.getInstance().startDB();
+        Usuario admin = new Usuario("admin", "admin", "admin");
+        UsuarioServices.getInstance().crear(admin);
 
         JavalinRenderer.register(JavalinThymeleaf.INSTANCE, ".html");
         new ControladoraRutas(app).aplicarRutas();

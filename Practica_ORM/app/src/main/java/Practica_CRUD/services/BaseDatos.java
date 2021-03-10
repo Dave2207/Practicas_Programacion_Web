@@ -25,11 +25,11 @@ public class BaseDatos {
         return db;
     }
 
-    public static Connection getConnection(){
+    public Connection getConnection(){
         Connection con = null;
         try{
             Class.forName("org.h2.Driver");
-            con = DriverManager.getConnection(url, "David", "12345");
+            con = DriverManager.getConnection(url, "sa", "");
             System.out.println("Conexión establecida.");
         } catch(SQLException | ClassNotFoundException e){
             System.out.println("Ha habido un error con la conexión.");
@@ -38,11 +38,11 @@ public class BaseDatos {
         return con;
     }
 
-    public static void startDB() throws SQLException {
+    public void startDB() throws SQLException {
         server = Server.createTcpServer("-tcpPort", "9092", "-tcpAllowOthers", "-ifNotExists").start();
     }
 
-    public static void stopDB() throws SQLException {
+    public void stopDB() throws SQLException {
         server.shutdown();
     }
     
