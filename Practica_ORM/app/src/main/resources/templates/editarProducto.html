@@ -31,17 +31,18 @@
     <form th:action="'/editarProd/'+${id}" method="post">
 
         <div class="form-group">
-            <input type="text" class="form-control" name="id" placeholder="ID No." required="required" th:value="${id}">
-        </div>
-        <div class="form-group">
             <input type="text" class="form-control" name="nombre" placeholder="Nombre" required="required" th:value="${nombre}">
         </div>
         <div class="form-group">
             <input type="text" class="form-control" name="precio" placeholder="Precio" required="required" th:value="${precio}">
         </div>
         <div class="form-group">
+            <textarea class="form-control" name="descripcion" placeholder="Descripcion" required="required" th:text="${descripcion}"></textarea>
+        </div>
+        <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block">Actualizar</button>
         </div>
+        <p class="text-center"><a href="/">Cancelar</a></p>
 </div>
 
 </body>

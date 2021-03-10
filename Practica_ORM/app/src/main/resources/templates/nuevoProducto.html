@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Insertar producto</title>
     <!-- bootstrap css -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
     <style type="text/css">
         .login-form {
@@ -15,25 +17,36 @@
 </head>
 
 <body>
-<div class="login-form">
-    <div class="text-center">
-        <h1>Nuevo Producto</h1>
+    <div class="login-form">
+        <div class="text-center">
+            <h1>Nuevo Producto</h1>
+
+
+            <form action="/nuevoProd" method="post" enctype="multipart/form-data">
+
+                <div class="form-group">
+                    <h4><label for="foto">Foto(s) del producto</label></h4>
+                    <input type="file" class="form-control" name="foto" id="foto" multiple required>
+                </div><br>
+                <h4>Detalles del producto</h4>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="nombre" placeholder="Nombre" required="required">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="precio" placeholder="Precio" required="required">
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Descripción del producto</label>
+                    <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea>
+                </div>
+                <br>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Agregar</button>
+                </div>
+            </form>
+            <p class="text-center"><a href="/">Cancelar</a></p>
+        </div>
     </div>
-
-    <form action="/nuevoProd" method="post">
-
-        <div class="form-group">
-            <input type="text" class="form-control" name="id" placeholder="ID No." required="required">
-        </div>
-        <div class="form-group">
-            <input type="text" class="form-control" name="nombre" placeholder="Nombre" required="required">
-        </div>
-        <div class="form-group">
-            <input type="text" class="form-control" name="precio" placeholder="Precio" required="required">
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-block">Agregar</button>
-        </div>
-</div>
 </body>
+
 </html>
