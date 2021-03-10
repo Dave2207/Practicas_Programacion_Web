@@ -102,7 +102,7 @@ public class ControladoraRutas {
                     }
                 }
 
-                ctx.render("/templates/listaProductos.html", modelo);
+                ctx.render("/listaProductos.html", modelo);
             });
             //Login y usuario
             before("/confirmarLog", ctx ->{

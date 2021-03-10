@@ -26,6 +26,7 @@ public class App {
         }).start(7000);
         
         BaseDatos.getInstance().startDB();
+        BaseDatos.getInstance().getConnection();
         Usuario admin = new Usuario("admin", "admin", "admin");
         UsuarioServices.getInstance().crear(admin);
 

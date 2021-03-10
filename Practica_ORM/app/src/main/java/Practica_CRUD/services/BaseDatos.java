@@ -38,8 +38,12 @@ public class BaseDatos {
         return con;
     }
 
-    public void startDB() throws SQLException {
-        server = Server.createTcpServer("-tcpPort", "9092", "-tcpAllowOthers", "-ifNotExists").start();
+    public void startDB() {
+        try {
+        server = Server.createTcpServer("-tcpPort", "9090", "-tcpAllowOthers", "-tcpDaemon","-ifNotExists").start();
+        } catch(SQLException e){
+            e.getMessage();
+        }
     }
 
     public void stopDB() throws SQLException {
