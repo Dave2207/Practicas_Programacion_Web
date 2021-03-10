@@ -2,6 +2,8 @@ package Practica_CRUD.encapsulations;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,14 +14,14 @@ public class ventasProductos implements Serializable{
     private String fechaCompra;
     private String nombreCliente;
     @OneToMany (fetch = FetchType.EAGER)
-    private ArrayList<DetalleProducto> listaProductos;
+    private List<DetalleProducto> listaProductos;
     private double total;
 
     public ventasProductos(){
 
     }
 
-    public ventasProductos(String fechaCompra, String nombreCliente, ArrayList<DetalleProducto> listaProductos){
+    public ventasProductos(String fechaCompra, String nombreCliente, List<DetalleProducto> listaProductos){
         this.fechaCompra = fechaCompra;
         this.nombreCliente = nombreCliente;
         this.listaProductos = listaProductos;
@@ -47,11 +49,11 @@ public class ventasProductos implements Serializable{
         this.nombreCliente = nombreCliente;
     }
 
-    public ArrayList<DetalleProducto> getListaProductos() {
+    public List<DetalleProducto> getListaProductos() {
         return listaProductos;
     }
 
-    public void setListaProductos(ArrayList<DetalleProducto> listaProductos) {
+    public void setListaProductos(List<DetalleProducto> listaProductos) {
         this.listaProductos = listaProductos;
     }
     
