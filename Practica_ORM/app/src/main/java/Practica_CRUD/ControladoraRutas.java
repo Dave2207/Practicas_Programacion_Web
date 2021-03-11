@@ -330,7 +330,7 @@ public class ControladoraRutas {
                 modelo.put("cant",lista.size());
                 modelo.put("usuario",ctx.sessionAttribute("user"));
 
-                ctx.render("/vistaComentario.html", modelo);
+                ctx.render("/templates/vistaComentario.html", modelo);
             });
 
             before("/newComentario", ctx -> {

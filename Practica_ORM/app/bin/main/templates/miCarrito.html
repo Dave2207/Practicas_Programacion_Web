@@ -49,7 +49,7 @@
             <td th:text="${detalle.producto.id}">ID Producto</td>
             <td th:text="${detalle.producto.nombre}">Nombre Producto</td>
             <td th:text="${detalle.producto.precio}">Precio Producto</td>
-            <td th:text="${detalle.producto.cantidad}">Cantidad Producto</td>
+            <td th:text="${detalle.cantidad}">Cantidad Producto</td>
             <td>
                 <form th:action="'eliminarProdCarrito/'+${detalle.producto.id}" method="POST">
                     <input class="" type="number" value="1" id="cantidad" name="cantidad" min="1" th:max="${detalle.cantidad}" required>

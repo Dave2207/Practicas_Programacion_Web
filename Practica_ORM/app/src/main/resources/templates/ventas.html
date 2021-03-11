@@ -40,11 +40,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="producto : ${venta.listaProductos}">
-                <td th:text="${producto.id}">Nombre</td>
-                <td th:text="${producto.nombre}">Nombre</td>
-                <td th:text="${producto.precio}">Precio</td>
-                <td th:text="${producto.cantidad}">Cantidad</td>
+            <tr th:each="detalle : ${venta.listaProductos}">
+                <td th:text="${detalle.producto.id}">Nombre</td>
+                <td th:text="${detalle.producto.nombre}">Nombre</td>
+                <td th:text="${detalle.producto.precio}">Precio</td>
+                <td th:text="${detalle.cantidad}">Cantidad</td>
             </tr>
             </tbody>
         </table>

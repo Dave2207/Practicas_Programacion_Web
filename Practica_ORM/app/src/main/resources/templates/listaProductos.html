@@ -66,14 +66,14 @@
               <div th:id="'carouselExampleIndicators'+${producto.id}" class="carousel slide" data-ride="carousel"
                 style="width: 150px; height: 150px;">
 
-                <div class="carousel-inner">
+                <!-- <div class="carousel-inner">
 
                   <div class="carousel-item" th:each="foto : ${producto.fotos}" th:class="${fotoStat.first}? 'carousel-item active' : 'carousel-item'">
                     <img class="d-block w-100"
                       th:src="@{'data:'+${foto.getMimeType()}+';base64,'+${foto.getFotoBase64()}}" alt="First slide">
                   </div>
 
-                </div>
+                </div> -->
                 <a class="carousel-control-prev" th:href="'#carouselExampleIndicators'+${producto.id}" role="button"
                   data-slide="prev" style="color: dodgerblue;">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
