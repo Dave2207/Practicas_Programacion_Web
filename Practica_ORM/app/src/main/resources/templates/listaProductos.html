@@ -17,7 +17,7 @@
   <header>
     <ul class="nav justify-content-end">
       <li class="nav-item">
-        <a class="nav-link" aria-current="page">Comprar</a>
+        <a class="nav-link" aria-current="page" href="#">Comprar</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/ventasRealizadas">Ventas realizadas</a>
@@ -68,8 +68,7 @@
 
                 <div class="carousel-inner">
 
-                  <div class="carousel-item" th:each="foto : ${producto.fotos}"
-                    th:class="${fotoStat.first}? 'carousel-item active' : 'carousel-item'">
+                  <div class="carousel-item" th:each="foto : ${producto.fotos}" th:class="${fotoStat.first}? 'carousel-item active' : 'carousel-item'">
                     <img class="d-block w-100"
                       th:src="@{'data:'+${foto.getMimeType()}+';base64,'+${foto.getFotoBase64()}}" alt="First slide">
                   </div>
