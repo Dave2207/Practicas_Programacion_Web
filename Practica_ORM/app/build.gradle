@@ -45,7 +45,7 @@ application {
     mainClass = 'Practica_CRUD.App'
 }
 
-mainClassName = 'App'
+mainClassName = 'Practica_CRUD.App'
 
 shadowJar{
     baseName = 'app'
