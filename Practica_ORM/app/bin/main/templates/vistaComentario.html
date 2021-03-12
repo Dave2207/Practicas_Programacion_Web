@@ -45,7 +45,7 @@
                         <div th:id="'carouselFotos'+${producto.id}" class="carousel slide" data-ride="carousel"
                             style="width: 300px; height: 300px;">
 
-                            <div class="carousel-inner">
+                            <!-- <div class="carousel-inner">
 
                                 <div class="carousel-item" th:each="foto : ${producto.fotos}"
                                     th:class="${fotoStat.first}? 'carousel-item active' : 'carousel-item'">
@@ -54,7 +54,7 @@
                                         alt="First slide">
                                 </div>
 
-                            </div>
+                            </div> -->
                             <a class="carousel-control-prev" th:href="'#carouselFotos'+${producto.id}" role="button"
                                 data-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -105,20 +105,19 @@
                         <tr>
                             <th scope="col">Autor</th>
                             <th scope="col">Comentario</th>
-                            <th scope="col"> </th>
+                            <th scope="col">Acción </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="comentario : ${lista}">
-                            <td th:text="${comentario.usuario.name}">Autor</td>
+                            <td th:text="${comentario.usuario.nombre}">Autor</td>
                             <td th:text="${comentario.texto}" style="word-break: break-all;">Nombre Producto</td>
                             <td th:switch="${usuario}">
 
                                 <span th:case="'admin'">
                                     <form th:action="'/eliminarComentario/'+${comentario.id}" method="post">
                                         <input id="idProd" name="idProd" type="hidden" th:value="${producto.id}">
-                                        <input type="image" src="/imgs/delete.png" width="30" height="30"
-                                            alt="Eliminar comentario" />
+                                        <input type="submit" width="30" height="30" value="Eliminar Comentario" alt="Eliminar comentario" />
                                     </form>
                                 </span>
 
