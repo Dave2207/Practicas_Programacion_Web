@@ -28,7 +28,10 @@ public class App {
         BaseDatos.getInstance().startDB();
         // BaseDatos.getInstance().getConnection();
         Usuario admin = new Usuario("admin", "admin", "admin");
-        UsuarioServices.getInstance().crear(admin);
+        
+        if(UsuarioServices.getInstance().find("admin") == null){
+            UsuarioServices.getInstance().crear(admin);
+        }
 
         JavalinRenderer.register(JavalinThymeleaf.INSTANCE, ".html");
         new ControladoraRutas(app).aplicarRutas();
