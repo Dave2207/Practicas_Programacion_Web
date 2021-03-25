@@ -23,7 +23,7 @@ public class App {
 
         Javalin app = Javalin.create(config -> {
             config.addStaticFiles("/templates");
-        }).start(7000);
+        }).start(getHerokuAssignedPort());
         
         BaseDatos.getInstance().startDB();
         // BaseDatos.getInstance().getConnection();
@@ -36,5 +36,13 @@ public class App {
         JavalinRenderer.register(JavalinThymeleaf.INSTANCE, ".html");
         new ControladoraRutas(app).aplicarRutas();
 
+    }
+
+    static int getHerokuAssignedPort() {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        if (processBuilder.environment().get("PORT") != null) {
+            return Integer.parseInt(processBuilder.environment().get("PORT"));
+        }
+        return 7000; //Retorna el puerto por defecto en caso de no estar en Heroku.
     }
 }

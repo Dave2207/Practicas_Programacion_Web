@@ -37,6 +37,8 @@ dependencies {
     implementation 'org.hibernate:hibernate-entitymanager:5.4.17.Final'
     //Procesamiento JSON para Javalin.
     implementation "com.fasterxml.jackson.core:jackson-databind:2.10.1"
+    //PostgreSQL
+    implementation 'org.postgresql:postgresql:42.2.1'
     
 }
 
@@ -52,3 +54,6 @@ shadowJar{
     classifier = ''
     archiveVersion = ''
 }
+
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
