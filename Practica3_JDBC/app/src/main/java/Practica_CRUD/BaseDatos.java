@@ -11,7 +11,7 @@ import org.h2.tools.Server;
 
 public class BaseDatos {
     private static BaseDatos db = null;
-    private static String url = "jdbc:h2:tcp://localhost/~/dbCRUD";
+    private static String url = "jdbc:h2:tcp://localhost/~/base";
     private static Server server;
 
     private BaseDatos(){
@@ -39,7 +39,7 @@ public class BaseDatos {
     }
 
     public static void startDB() throws SQLException {
-        server = Server.createTcpServer("-tcpPort", "9092", "-tcpAllowOthers", "-ifNotExists").start();
+        server = Server.createTcpServer("-tcpPort", "9090", "-tcpAllowOthers", "-ifNotExists").start();
     }
 
     public static void stopDB() throws SQLException {
